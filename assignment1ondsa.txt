@@ -1,0 +1,444 @@
+program1:The code in your editor does the following:
+
+Reads an integer from stdin and saves it to a variable, , denoting some number of integers.
+Reads  integers corresponding to a0,a1,a2...a,-1;from stdin and saves each integer  to a variable, .
+Attempts to print each element of an array of integers named .
+Write the following code in the unlocked portion of your editor:
+
+Create an array, , capable of holding  integers.
+Modify the code in the loop so that it saves each sequential value to its corresponding location in the array. For example, the first value must be stored in , the second value must be stored in , and so on.
+
+solution:
+mport java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+	   
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+int[] a = new int[n];
+ for(int j = 0; j < n; j++){
+  a[j] = scan.nextInt();
+ }
+        scan.close();
+
+
+
+program2:
+You are given a  2D array. An hourglass in an array is a portion shaped like this.
+solution:
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+ 
+    Scanner s = new Scanner(System.in);
+    int arr[][]= new int[6][6];
+    int arr1[]=new int[24];
+    int arr2[]=new int[16];
+    int arr3[]=new int[16];
+     int x=0;
+    for (int i=0;i<6;i++){
+        for (int j=0;j<6;j++){
+            arr[i][j]=s.nextInt();
+            }
+        }
+        for(int i=0;i<6;i++){
+            for (int j=0;j<4;j++){
+            arr1[x]=arr[i][j]+arr[i][j+1]+arr[i][j+2];
+            x++;
+            }
+        }
+        x=0;
+        for(int i=1;i<=4;i++){
+            for (int j=1;j<=4;j++){
+                arr2[x]=arr[i][j];
+                x++;
+            }
+        }
+        x=0;
+        for(int i=0;i<16;i++){
+            arr3[x]=arr1[i]+arr2[i]+arr1[i+8];
+            x++;
+        }
+        Arrays.sort(arr3);
+        System.out.printf("%d ",arr3[15]);
+    }
+}
+
+
+program 3:
+A subarray of an -element array is an array composed from a contiguous block of the original array's elements. For example, if , then the subarrays are , , , , , and . Something like  would not be a subarray as it's not a contiguous subsection of the original array.
+
+
+solution:
+import java.util.*;
+
+public class Solution {
+  public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    int n = Integer.parseInt(scan.nextLine()); // array length
+        
+    int A[] = new int[n]; // 1D array
+        
+    for (int i = 0; i < n; i++) {
+      A[i] = scan.nextInt(); // A = [#, #, ...]
+    }
+        
+    int w = 1; // Initialize width of sliding window
+    int count = 0; // Count negative subarrays
+        
+    while (w <= n) {
+      for (int j = 0; j < n-w+1; j++) {
+        int[] sub_array = Arrays.copyOfRange(A, j, j+w);
+        int sum_ = 0;
+            
+        for (int e : sub_array) {
+          sum_ += e;
+        }
+        if (sum_ < 0) count++;
+      }
+      w++;
+    }
+    System.out.print(count);
+        
+    scan.close(); // Close Scanner object
+  }
+}
+
+
+
+
+program 4:
+You are given  lines. In each line there are zero or more integers. You need to answer a few queries where you need to tell the number located in  position of  line.
+
+Take your input from System.in.
+
+solution:
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int rowsCount = scanner.nextInt();
+        List<List<Integer>> rows = new ArrayList<>();
+        for (int i = 0; i < rowsCount; i++) {
+            int numbersInRowCount = scanner.nextInt();
+            List<Integer> currentList = new ArrayList<>();
+
+            for (int j = 0; j < numbersInRowCount; j++) {
+                currentList.add(scanner.nextInt());
+            }
+            rows.add(currentList);
+        }
+
+        int checksCount = scanner.nextInt();
+        for (int i = 0; i < checksCount; i++) {
+            int x = scanner.nextInt() - 1;
+            int y = scanner.nextInt() - 1;
+            try {
+                System.out.println(rows.get(x).get(y));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("ERROR!");
+            }
+        }
+    }
+}
+
+
+
+program 5:
+Let's play a game on an array! You're standing at index  of an -element array named . From some index  (where ), you can perform one of the following moves:
+
+Move Backward: If cell  exists and contains a , you can walk back to cell .
+Move Forward:
+If cell  contains a zero, you can walk to cell .
+If cell  contains a zero, you can jump to cell .
+If you're standing in cell  or the value of , you can walk or jump off the end of the array and win the game.
+
+solution:
+import java.util.*;
+
+public class Solution {
+
+    public static boolean rec(int leap, int[]  game, int i, boolean[] visited)
+    {
+        //System.out.println(i);
+        if(i>=game.length)
+        {
+            return true;
+        }
+        
+        if(visited[i] == true || game[i]!=0)
+        {
+            return false;
+        }
+        visited[i] = true;
+        
+        if(rec(leap, game, i+leap, visited))
+        {
+            return true;
+        }
+        
+        if(rec(leap, game, i+1, visited))
+        {
+            return true;
+        }
+        
+        if(i-1>=0)
+        {
+            if(rec(leap, game, i-1, visited))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+    public static boolean canWin(int leap, int[] game) {
+        // Return true if you can win the game; otherwise, return false.
+        boolean[] visited = new boolean[game.length];
+        int i = 0;
+        
+        return rec(leap, game, i, visited);
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int q = scan.nextInt();
+        while (q-- > 0) {
+            int n = scan.nextInt();
+            int leap = scan.nextInt();
+            
+            int[] game = new int[n];
+            for (int i = 0; i < n; i++) {
+                game[i] = scan.nextInt();
+            }
+
+            System.out.println( (canWin(leap, game)) ? "YES" : "NO" );
+        }
+        scan.close();
+    }
+}
+
+
+program 6:
+For this problem, we have  types of queries you can perform on a List:
+
+Insert  at index :
+
+Insert
+x y
+Delete the element at index :
+
+Delete
+x
+Given a list, , of  integers, perform  queries on the list. Once all queries are completed, print the modified list as a single line of space-separated integers.
+
+solution:
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+    Scanner sc = new Scanner(System.in);
+        int n =sc.nextInt();
+        List<Integer> datan = new ArrayList<Integer>();
+        for(int i=0;i<n;i++){
+            datan.add(sc.nextInt());
+        }
+        int q=sc.nextInt();
+        for(int i=0;i<q;i++){
+             String qcommand=sc.next();
+             switch(qcommand){
+                 case "Insert":
+                    int x=sc.nextInt();
+                    int y=sc.nextInt();
+                    datan.add(x,y);
+                    break;
+                case "Delete":
+                    int z=sc.nextInt();
+                    datan.remove(z);
+                    break;
+             }
+        }
+        for(Integer i: datan){
+        System.out.print(i+" ");
+        }
+    }
+}
+
+
+program 7:
+A string containing only parentheses is balanced if the following is true: 1. if it is an empty string 2. if A and B are correct, AB is correct, 3. if A is correct, (A) and {A} and [A] are also correct.
+
+Examples of some correctly balanced strings are: "{}()", "[{()}]", "({()})"
+
+Examples of some unbalanced strings are: "{}(", "({)}", "[[", "}{" etc.
+
+Given a string, determine if it is balanced or not.
+
+solution:
+import java.util.*;
+class Solution{
+	
+	public static void main(String []argh)
+	{
+		Scanner sc = new Scanner(System.in);
+		
+	    while (sc.hasNext()) {
+            String input = sc.next();
+            Stack<Character> str = new Stack<>();
+            
+            for(int i=0; i<input.length(); i++){
+                if(input.charAt(i)== '{' || input.charAt(i)== '[' || input.charAt(i )== '('){
+                    str.push(input.charAt(i));
+                }
+                else {
+                  if(str.empty()){
+                        str.push(input.charAt(i));
+                        break;
+                    }
+                    char c =str.pop();
+                    if(input.charAt(i)== '{' && c != '}' || input.charAt(i)== '[' && c != ']' || input.charAt(i)== '(' && c != ')'){
+                        break;
+                    }
+                }
+            }
+            if(str.empty()){
+                System.out.println("true");
+            }
+            else{
+                System.out.println("false");
+            }
+        }
+	}
+}
+
+
+program 8:
+
+In computer science, a set is an abstract data type that can store certain values, without any particular order, and no repeated values(Wikipedia).  is an example of a set, but  is not a set. Today you will learn how to use sets in java by solving this problem.
+
+You are given  pairs of strings. Two pairs  and  are identical if  and . That also implies  is not same as . After taking each pair as input, you need to print number of unique pairs you currently have.
+
+Complete the code in the editor to solve this problem.
+
+solution:
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+ public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        int t = s.nextInt();
+        String [] pair_left = new String[t];
+        String [] pair_right = new String[t];
+        
+        for (int i = 0; i < t; i++) {
+            pair_left[i] = s.next();
+            pair_right[i] = s.next();
+        }
+        
+        HashSet<String> h_set = new HashSet<>();
+        for(int i = 0;i < t;i++){
+            h_set.add(pair_left[i] + " " + pair_right[i]);
+            System.out.println(h_set.size());
+        }
+//Write your code here
+
+   }
+}
+
+program 11:
+You are given a list of student information: ID, FirstName, and CGPA. Your task is to rearrange them according to their CGPA in decreasing order. If two student have the same CGPA, then arrange them according to their first name in alphabetical order. If those two students also have the same first name, then order them according to their ID. No two students have the same ID.
+
+Hint: You can use comparators to sort a list of objects. See the oracle docs to learn about comparators.
+
+Input Format
+
+The first line of input contains an integer , representing the total number of students. The next  lines contains a list of student information in the following structure:
+
+solution:
+import java.util.*;
+
+class Student{
+	private int id;
+	private String fname;
+	private double cgpa;
+	public Student(int id, String fname, double cgpa) {
+		super();
+		this.id = id;
+		this.fname = fname;
+		this.cgpa = cgpa;
+	}
+	public int getId() {
+		return id;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public double getCgpa() {
+		return cgpa;
+	}
+}
+
+//Complete the code
+public class Solution
+{
+	public static void main(String[] args){
+		Scanner in = new Scanner(System.in);
+		int testCases = Integer.parseInt(in.nextLine());
+		
+		List<Student> studentList = new ArrayList<Student>();
+		while(testCases>0){
+			int id = in.nextInt();
+			String fname = in.next();
+			double cgpa = in.nextDouble();
+            
+			Student st = new Student(id, fname, cgpa);
+			studentList.add(st);
+			
+			testCases--;
+		}
+        
+        Comparator<Student> c = (s1,s2) -> {
+            if(s1.getCgpa()==s2.getCgpa()) {
+                if(s1.getFname()==s2.getFname()) {
+                    return s1.getId()-s2.getId();
+                }
+                return s1.getFname().compareTo(s2.getFname());
+            }
+          return Double.compare(s2.getCgpa(),s1.getCgpa());  
+        };
+        
+        Collections.sort(studentList, c);
+        
+      	for(Student st: studentList){
+			System.out.println(st.getFname());
+		}
+	}
+}
+
